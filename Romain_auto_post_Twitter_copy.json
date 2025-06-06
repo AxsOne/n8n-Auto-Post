@@ -787,7 +787,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "INSERT INTO post_backups (original_post_id, link, created_at, priority, mode)\nSELECT id, link, created_at, priority, mode\nFROM posts\nWHERE id = {{ $('MySQL8').item.json.id }}\n  AND (\n    mode = 'manual'\n    OR (\n      mode = 'auto'\n      AND id NOT IN (\n        SELECT original_post_id FROM post_backups WHERE mode = 'auto'\n      )\n    )\n  );\n",
+        "query": "INSERT INTO post_backups (original_post_id, link, created_at, priority, mode, social_network_id)\nSELECT posts.id, posts.link, posts.created_at, posts.priority, posts.mode, post_targets.social_network_id\nFROM posts JOIN post_targets ON post_targets.post_id = posts.id\nWHERE posts.id = {{ $('MySQL8').item.json.id }}\n  AND (\n    posts.mode = 'manual'\n    OR (\n      posts.mode = 'auto'\n      AND posts.id NOT IN (\n        SELECT original_post_id FROM post_backups WHERE mode = 'auto'\n      )\n    )\n  );\n",
         "options": {}
       },
       "type": "n8n-nodes-base.mySql",
