@@ -1,0 +1,1651 @@
+{
+  "name": "Romain auto post Twitter copy",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('MySQL4').item.json.social_network_id }}",
+                    "rightValue": 3,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "db14eaed-ee88-4240-83f4-cdecbdf85916"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9107e4e0-688c-49ca-a4d4-df6bb9dd35eb",
+                    "leftValue": "={{ $('MySQL4').item.json.social_network_id }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fe68a4c6-a213-4f04-8209-edcfa1ffb7cb",
+                    "leftValue": "={{ $('MySQL4').item.json.social_network_id }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3940,
+        1100
+      ],
+      "id": "8fa85d2b-ab81-4b27-8577-de8512ac5386",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v22.0/220558674732130/feed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "={{ $json.access_token }}",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "link",
+              "value": "={{ $('MySQL6').item.json.link }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('Read Token File3').item.json.link }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4340,
+        920
+      ],
+      "id": "98ecee73-9bbf-44d9-b5e9-eb96fd4acbae",
+      "name": "HTTP Request4",
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://studio97400.webhook.office.com/webhookb2/dd058375-a31f-4a2c-931d-dd827bf9552b@21155ab5-0225-4d34-bb76-9e22240614cc/IncomingWebhook/e20062161c9144159b1056caa434ccf4/b8f4ae0e-642b-4dd9-884f-a538e4a52b77/V2jXhsMzDg6v_XtU4EU8UP-7IDYyfYAkrUaKxTg8Af2cU1",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"✅ Un nouvel article 22 : {{ $('Edit Fields6').item.json.post_facebook }}+  {{ $json.link }} \"\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4480,
+        1100
+      ],
+      "id": "a4520a73-56b2-4ee0-8847-765d27a7e09e",
+      "name": "To Microsoft teams1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2420,
+        1140
+      ],
+      "id": "a6e1750f-2087-459a-ae13-ad3ae0ceac7f",
+      "name": "Loop Over Items",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "filePath": "/data-article/token.json"
+      },
+      "name": "Read Token File2",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        1420,
+        440
+      ],
+      "id": "37f15cc5-e3b7-4d65-b568-37ea6102b2cd"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Convert Binary to JSON2",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        440
+      ],
+      "id": "fe5995cc-bf34-4427-86d3-86596a913f61"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "access_token",
+              "value": "={{ $json[\"access_token\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set New Token JSON1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        340
+      ],
+      "id": "ddb7dee7-cc04-4fcd-b4b9-881e7c6dceef"
+    },
+    {
+      "parameters": {
+        "fileName": "/data_article/token.json",
+        "options": {}
+      },
+      "name": "Write Token File1",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        340
+      ],
+      "id": "280033f4-0bfe-40fb-aa53-8af1a10807ed"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/debug_token",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "input_token",
+              "value": "={{ $json.access_token }}"
+            },
+            {
+              "name": "access_token",
+              "value": "702055212505234|0b0cd27941b6ad2c25de0b62b15ebf94"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Check Token Validity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        440
+      ],
+      "id": "d0908e2c-2851-472a-8a01-c3cd65db0cd1"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v18.0/oauth/access_token",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "grant_type",
+              "value": "fb_exchange_token"
+            },
+            {
+              "name": "client_id",
+              "value": "702055212505234"
+            },
+            {
+              "name": "client_secret",
+              "value": "0b0cd27941b6ad2c25de0b62b15ebf94"
+            },
+            {
+              "name": "fb_exchange_token",
+              "value": "={{ $('Convert Binary to JSON2').item.json.access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Refresh Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2220,
+        340
+      ],
+      "id": "3c8e252f-c718-4410-b7e3-dbcc5a11e8d0",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3078c1e8-87d2-4e81-83be-6711196cdd67",
+              "leftValue": "={{ $json.data.is_valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2040,
+        440
+      ],
+      "id": "735539f3-b49a-47c5-9e78-222e7be60670",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "729f0aea-6765-42db-b0bf-106b8cb2a43f",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "f59b55f1-cc33-4fe8-8fc9-7db1820da733",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        860
+      ],
+      "id": "3198a6a4-a97a-4ae7-b734-73c19a6b2d37",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini-2024-07-18",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI-2024-07-18"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=[\n  {\n    \"role\": \"system\",\n    \"content\": \"Tu es un assistant qui résume très brièvement les articles pour un post Facebook. Répond uniquement avec une seule phrase.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Résume en une phrase cet article : {{ $('MySQL8').item.json.content }}\"\n  }\n]\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1500,
+        860
+      ],
+      "id": "06c6ff16-5d4b-408a-b12a-873050d44c48",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "R7NRzauXhQgeolW4",
+          "name": "OpenAi account - David"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4b78ac04-a9e9-4c0c-8a06-cea0c4994b48",
+              "name": "post_facebook",
+              "value": "={{ $json.message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "47e9f5a9-f3fb-40fe-ae38-c0a483741fb4",
+              "name": "link",
+              "value": "={{ $('Edit Fields5').item.json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1860,
+        860
+      ],
+      "id": "b4d61145-9602-43b5-8460-c76a8de10066",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "05a50c29-7bfb-44a3-b2b4-31592b4c9c46",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 201,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4720,
+        1100
+      ],
+      "id": "1f40d8aa-dc80-41fc-afc3-736bf8b18434",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1220,
+        440
+      ],
+      "id": "d2d842a4-3c8d-4c8a-ab9a-f5c2150fbea9",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "content": "**Token Manager**\n\nverifier le token si il est éxpiré \n",
+        "height": 420,
+        "width": 1820,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "85c7fe50-642f-452c-8480-7e5acce8e8ff",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Setup Workflow\nsetup la première partie du workflow récupérer l'article et récupérer uniquement le champ voulu",
+        "height": 660,
+        "width": 1200
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -40,
+        840
+      ],
+      "typeVersion": 1,
+      "id": "54170c8e-f69c-423e-a23e-1c2bff98089e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## format and stock\n\nFormaté la structure de donnée et préparé le post\n",
+        "height": 340,
+        "width": 860,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        680
+      ],
+      "typeVersion": 1,
+      "id": "87b1e4b6-b0ca-4fe7-bf76-d158b5469818",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Loop\nEnvoyé les post et changé les états en database",
+        "height": 820,
+        "width": 3280,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2060,
+        680
+      ],
+      "typeVersion": 1,
+      "id": "4cfc8086-93e5-4f7d-bfda-b23f9a0ec8a8",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "filePath": "/data-article/token.json"
+      },
+      "name": "Read Token File3",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        520,
+        620
+      ],
+      "id": "14c0c741-2af5-4b27-b798-381310b856d1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Convert Binary to JSON4",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        760,
+        620
+      ],
+      "id": "9f57d3b3-1090-4eb0-9291-efbd9a18c4b7"
+    },
+    {
+      "parameters": {
+        "mode": "jsonToBinary",
+        "options": {}
+      },
+      "name": "Convert Binary to JSON5",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        340
+      ],
+      "id": "90ac7f84-b52e-49ec-b014-8704ac90ac9f"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        1120
+      ],
+      "id": "b06acf01-7faa-4f4a-9ef3-efa7a02a3ede",
+      "name": "Schedule Trigger3"
+    },
+    {
+      "parameters": {
+        "content": "## format and data and stock in database\n\n",
+        "height": 460,
+        "width": 860,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        1040
+      ],
+      "typeVersion": 1,
+      "id": "e0588f49-2f97-4b05-9031-79122625f259",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "social_network_id",
+              "value": "={{ $json.social_network_id }}"
+            },
+            {
+              "name": "priority",
+              "value": "1"
+            },
+            {
+              "name": "mode",
+              "value": "auto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Edit Fields7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        1140
+      ],
+      "id": "88c55908-a2a8-4cd5-8161-cab413489271"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        940
+      ],
+      "id": "b21d95cc-ff81-4e72-8f12-8f08d58011c8",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "twitterOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": {{ $('Edit Fields6').item.json.post_facebook }}\"\\n\\n{{ $json.link }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4200,
+        1100
+      ],
+      "id": "43842b82-69dd-407e-93b9-56c6339578a9",
+      "name": "TWITTER",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "MFLboNrrc4AEAV2N",
+          "name": "X account"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": {
+          "__rl": true,
+          "value": "post_targets",
+          "mode": "list",
+          "cachedResultName": "post_targets"
+        },
+        "dataMode": "defineBelow",
+        "columnToMatchOn": "post_id",
+        "valueToMatchOn": "={{ $('MySQL5').item.json.post_id }}",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "send_status",
+              "value": "send"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        4900,
+        1320
+      ],
+      "id": "ab4b5034-a391-4212-84cc-69590466a39e",
+      "name": "Change status2",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM post_targets;\nDELETE FROM posts;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        2800,
+        900
+      ],
+      "id": "e54c5762-c3be-456e-86b1-1b6cddf54a99",
+      "name": "MySQL",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "social_network_id",
+        "include": "={{ $json.social_network_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        1140
+      ],
+      "id": "9dba7f85-b943-4a8b-b3f3-06e42a1076ee",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "content": "## Verif token integrity\nverifié l'intégrité du token",
+        "height": 280,
+        "width": 840,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        540
+      ],
+      "typeVersion": 1,
+      "id": "530c64d7-a5da-4b8d-bbf5-9f1c5602cfd4",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        520
+      ],
+      "id": "341af779-f1e3-432e-a1a2-55ca8ffb8b66",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO post_backups (original_post_id, link, created_at, priority, mode)\nSELECT id, link, created_at, priority, mode\nFROM posts\nWHERE id = {{ $('MySQL8').item.json.id }}\n  AND (\n    mode = 'manual'\n    OR (\n      mode = 'auto'\n      AND id NOT IN (\n        SELECT original_post_id FROM post_backups WHERE mode = 'auto'\n      )\n    )\n  );\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        2580,
+        900
+      ],
+      "id": "f223b31e-63bc-436a-8331-b2edd8ea8f26",
+      "name": "MySQL1",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "table": {
+          "__rl": true,
+          "value": "post_targets",
+          "mode": "list",
+          "cachedResultName": "post_targets"
+        },
+        "dataMode": "defineBelow",
+        "columnToMatchOn": "post_id",
+        "valueToMatchOn": "={{ $('MySQL8').item.json.id }}",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "social_network_id",
+              "value": "={{ $json.social_network_id }}"
+            }
+          ]
+        },
+        "options": {
+          "detailedOutput": true
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        3000,
+        1140
+      ],
+      "id": "48cbad44-6850-4a93-b87c-e51ae15c097c",
+      "name": "Fill post target4",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT post_id, send_status FROM post_targets WHERE send_status = 'pending';\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        3200,
+        1140
+      ],
+      "id": "6d7415d3-0118-48b2-8659-217cc8ab1441",
+      "name": "MySQL5",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT social_network_id FROM post_targets WHERE post_id = {{ $json.post_id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        3400,
+        1140
+      ],
+      "id": "688e58be-cc69-4e2f-8ef3-99441c92e9e1",
+      "name": "MySQL4",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT link FROM posts WHERE id = {{ $('MySQL5').item.json.post_id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        3560,
+        1140
+      ],
+      "id": "cbdae0a5-e67b-4e91-879d-4c7c13e09990",
+      "name": "MySQL6",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "table": {
+          "__rl": true,
+          "value": "posts",
+          "mode": "list",
+          "cachedResultName": "posts"
+        },
+        "dataMode": "defineBelow",
+        "columnToMatchOn": "link",
+        "valueToMatchOn": "={{ $json.link }}",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "priority",
+              "value": "={{ $json.priority }}"
+            },
+            {
+              "column": "mode",
+              "value": "={{ $json.mode }}"
+            },
+            {
+              "column": "id",
+              "value": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {
+          "detailedOutput": true
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1360,
+        1320
+      ],
+      "id": "3f6ac70b-231a-4b14-9433-5c17079eba7f",
+      "name": "Fill post",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "insertId",
+              "value": "={{ $json.data.insertId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set InsertId1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        1320
+      ],
+      "id": "485a67c9-7fd0-40c6-ba6e-dd30571e0235"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2200,
+        1140
+      ],
+      "id": "1a74fff5-ffa5-4380-9dd2-40a8a2940c53",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://studio97400.webhook.office.com/webhookb2/dd058375-a31f-4a2c-931d-dd827bf9552b@21155ab5-0225-4d34-bb76-9e22240614cc/IncomingWebhook/e20062161c9144159b1056caa434ccf4/b8f4ae0e-642b-4dd9-884f-a538e4a52b77/V2jXhsMzDg6v_XtU4EU8UP-7IDYyfYAkrUaKxTg8Af2cU1",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"{{ $json.text }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4600,
+        840
+      ],
+      "id": "8f12f31e-041c-4439-b0f7-de6c1e974e41",
+      "name": "To Microsoft teams2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "twitterOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"{{ $('Code').item.json.post_facebook }}  {{ $('Code').item.json.link }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4440,
+        1320
+      ],
+      "id": "f8cd1dd5-43b2-4403-8881-9651bc50601e",
+      "name": "TWITTER1",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "MFLboNrrc4AEAV2N",
+          "name": "X account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM rss_entries WHERE id = {{ $('MySQL8').item.json.id }};",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        3000,
+        900
+      ],
+      "id": "e88e9b6d-8948-42c3-bd73-daaf7265247e",
+      "name": "MySQL3",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "70158edc-da11-483d-a473-7ffe01d2f6a6",
+              "name": "post_facebook",
+              "value": "={{ $('Merge').item.json.post_facebook }}",
+              "type": "string"
+            },
+            {
+              "id": "cbdc402a-8877-43fc-907a-a0ec5b41d2d3",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3720,
+        1140
+      ],
+      "id": "65fa5954-9364-4394-87b6-42e3afe8009a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const link = (item.json.link || '').trim();\n  const post = (item.json.post_facebook || '')\n    .replace(/[\\n\\r]+/g, ' ')\n    .replace(/\\\\/g, '\\\\\\\\')\n    .replace(/\"/g, '\\\\\"');\n\n  item.json.text = `✅ Un nouvel article 22 : ${post} + ${link}`;\n  return item;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4220,
+        1320
+      ],
+      "id": "0a9e9241-b78c-48ec-97ae-51864c1f56b8",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT e.* \nFROM rss_entries e\nLEFT JOIN post_backups ON e.id = post_backups.original_post_id \nWHERE post_backups.original_post_id IS NULL\nAND e.mode = 'auto'\nORDER BY e.priority DESC, e.pubDate ASC\nLIMIT 1;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        680,
+        1120
+      ],
+      "id": "4f4060b4-924c-4166-b958-d595ca4a59d9",
+      "name": "MySQL8",
+      "credentials": {
+        "mySql": {
+          "id": "pg2V7fqTyl7K2PJw",
+          "name": "MySQL Db n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const ids = $json[\"social_network_id\"].split(\";\");\n\nreturn ids.map(id => ({\n  json: {\n    ...$json,\n    social_network_id: parseInt(id)\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2740,
+        1140
+      ],
+      "id": "c0d5773b-935d-41ce-a820-0f33a9010875",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const minMinutes = 3;\nconst maxMinutes = 10;\nconst randomMinutes = Math.floor(Math.random() * (maxMinutes - minMinutes + 1)) + minMinutes;\nconst delayMs = randomMinutes * 60 * 1000;\n\nreturn new Promise(resolve => {\n  setTimeout(() => {\n    resolve([{ json: { delay: randomMinutes } }]);\n  }, delayMs);\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        1120
+      ],
+      "id": "5809a86b-2af2-4501-bc9f-72e50637818a",
+      "name": "Code2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TWITTER",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To Microsoft teams1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Token File2": {
+      "main": [
+        [
+          {
+            "node": "Convert Binary to JSON2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Binary to JSON2": {
+      "main": [
+        [
+          {
+            "node": "Check Token Validity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set New Token JSON1": {
+      "main": [
+        [
+          {
+            "node": "Convert Binary to JSON5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refresh Token": {
+      "main": [
+        [
+          {
+            "node": "Set New Token JSON1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Refresh Token",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Change status2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Read Token File2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Token File3": {
+      "main": [
+        [
+          {
+            "node": "Convert Binary to JSON4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Binary to JSON4": {
+      "main": [
+        []
+      ]
+    },
+    "Convert Binary to JSON5": {
+      "main": [
+        [
+          {
+            "node": "Write Token File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read Token File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read Token File3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TWITTER": {
+      "main": [
+        [
+          {
+            "node": "To Microsoft teams1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change status2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fill post target4": {
+      "main": [
+        [
+          {
+            "node": "MySQL5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL5": {
+      "main": [
+        [
+          {
+            "node": "MySQL4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL4": {
+      "main": [
+        [
+          {
+            "node": "MySQL6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fill post": {
+      "main": [
+        [
+          {
+            "node": "Set InsertId1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set InsertId1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To Microsoft teams2": {
+      "main": [
+        []
+      ]
+    },
+    "TWITTER1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "MySQL3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "TWITTER1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fill post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Fill post target4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "MySQL8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5fad5c8d-663b-415c-a0f8-883e40d2ba39",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "93c2261424f7e6523ffe985253e96ff0671cdbd2e99ea6d9a90b1beec7fc2ec0"
+  },
+  "id": "HLg3er5WIgPD90vW",
+  "tags": [
+    {
+      "createdAt": "2025-06-06T05:17:46.416Z",
+      "updatedAt": "2025-06-06T05:17:46.416Z",
+      "id": "J8tP3SBQSZganAFL",
+      "name": "DEV"
+    }
+  ]
+}
